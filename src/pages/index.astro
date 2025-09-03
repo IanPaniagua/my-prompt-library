@@ -1,0 +1,98 @@
+---
+import Layout from "~/components/Layout.astro";
+import Header from "~/components/Header.astro";
+import Footer from "~/components/Footer.astro";
+import PromptCard from "~/components/PromptCard.astro";
+import { PROMPTS } from "~/data/prompts";
+---
+<Layout title="My Prompt Library — Product Manager Prompts" description="Curated, minimal prompt library tailored for Product Managers.">
+  <Header />
+  <main>
+    <section class="container-tight pt-16 pb-8">
+      <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight">My Prompt Library</h1>
+      <p class="mt-4 text-lg text-ink/70 max-w-2xl">A minimal collection of carefully crafted prompts to accelerate Product Management workflows. Straightforward. Opinionated. Effective.</p>
+    </section>
+
+    <section class="container-tight py-10">
+      <div class="rounded-3xl bg-subtle p-6 sm:p-10 border border-black/5">
+        <h2 class="text-xl font-semibold tracking-tight">What is a prompt library?</h2>
+        <p class="mt-3 text-ink/70">A prompt library is a curated set of reusable prompts designed for repeatable outcomes. Each prompt has clear intent, structure, and guardrails so you can focus on product thinking instead of wrestling with wording.</p>
+      </div>
+    </section>
+
+    <section class="container-tight py-10">
+      <h2 class="text-xl font-semibold tracking-tight">How to use as a Product Manager</h2>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+        <div class="card p-6">
+          <h3 class="font-semibold">Start with intent</h3>
+          <p class="mt-2 text-sm text-ink/70">Clarify the outcome you want: research plan, roadmap, stakeholder update. Then pick the relevant prompt template.</p>
+        </div>
+        <div class="card p-6">
+          <h3 class="font-semibold">Inject your context</h3>
+          <p class="mt-2 text-sm text-ink/70">Replace placeholders with your product vision, metrics, risks, and constraints. Specific inputs yield better outputs.</p>
+        </div>
+        <div class="card p-6">
+          <h3 class="font-semibold">Constrain and iterate</h3>
+          <p class="mt-2 text-sm text-ink/70">Ask for concise formats, tables, or outlines. Iterate with follow-ups to refine details.</p>
+        </div>
+        <div class="card p-6">
+          <h3 class="font-semibold">Review for signal</h3>
+          <p class="mt-2 text-sm text-ink/70">Treat outputs as drafts. Validate with users, partners, and data before committing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container-tight py-10">
+      <div class="rounded-3xl bg-subtle p-6 sm:p-10 border border-black/5">
+        <div class="flex items-start justify-between gap-4">
+          <h2 class="text-xl font-semibold tracking-tight">Prompting techniques and best practices</h2>
+          <a class="link text-sm" href="https://www.youtube.com/watch?v=eAqUscdYPPA" target="_blank" rel="noreferrer noopener">Source: Kosik Valuri (YouTube)</a>
+        </div>
+        <div class="mt-6 grid gap-4">
+          <div class="card p-6">
+            <h3 class="font-semibold">Core techniques</h3>
+            <ul class="mt-3 list-disc pl-5 text-sm text-ink/80 space-y-2">
+              <li><span class="font-medium">Role Playing:</span> Ask the model to act as a specific role (e.g., “act as a Product Manager” or “act as a UX Researcher”) for more relevant, contextual outputs.</li>
+              <li><span class="font-medium">Sequential Prompting:</span> Work step-by-step. Start broad, then iteratively refine with follow-ups to deepen the result.</li>
+              <li><span class="font-medium">One-shot / Few-shot:</span> Provide one or more examples to shape the style, structure, and level of detail you expect.</li>
+            </ul>
+          </div>
+          <div class="card p-6">
+            <h3 class="font-semibold">Writing high-quality prompts</h3>
+            <ul class="mt-3 list-disc pl-5 text-sm text-ink/80 space-y-2">
+              <li><span class="font-medium">Be conversational:</span> Write like you would brief a colleague.</li>
+              <li><span class="font-medium">Be clear, avoid ambiguity:</span> Use precise instructions and outcomes.</li>
+              <li><span class="font-medium">Provide context:</span> Add product vision, audience, constraints, success metrics.</li>
+              <li><span class="font-medium">Be specific:</span> Include formats, timelines, and keywords that matter.</li>
+            </ul>
+          </div>
+          <div class="card p-6">
+            <h3 class="font-semibold">PM-focused examples</h3>
+            <ul class="mt-3 list-disc pl-5 text-sm text-ink/80 space-y-2">
+              <li><span class="font-medium">User Research:</span> Instead of a generic question, instruct the model to design a mixed-methods plan with target segment, hypotheses, recruiting criteria, and analysis approach.</li>
+              <li><span class="font-medium">Feature Brainstorming:</span> Use role playing (e.g., PM for WhatsApp) to surface contextual ideas and trade-offs.</li>
+            </ul>
+          </div>
+          <div class="card p-6">
+            <h3 class="font-semibold">A helpful mental cue</h3>
+            <p class="mt-3 text-sm text-ink/80">Add the phrase “Take a deep breath and solve this step by step.” It often nudges the model toward clearer, more structured reasoning.</p>
+          </div>
+        </div>
+        <p class="mt-6 text-xs text-ink/60">This summary is based on insights from Kosik Valuri’s video: <a class="link" href="https://www.youtube.com/watch?v=eAqUscdYPPA" target="_blank" rel="noreferrer noopener">https://www.youtube.com/watch?v=eAqUscdYPPA</a>.</p>
+      </div>
+    </section>
+
+    <section class="container-tight py-10">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold tracking-tight">Featured prompts</h2>
+        <a class="link text-sm" href="/prompts">View all →</a>
+      </div>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2">
+        {PROMPTS.slice(0,4).map((p) => (
+          <PromptCard title={p.title} description={p.description} prompt={p.prompt} tags={p.tags} />
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

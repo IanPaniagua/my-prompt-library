@@ -1,0 +1,31 @@
+Técnicas y Estrategias Generales de Prompting
+Valuri comparte una "hoja de trucos" (cheat sheet) con técnicas específicas:
+• Juego de Roles (Role Playing): Es una de las técnicas más útiles. Consiste en pedirle al LLM que asuma un rol específico.
+    ◦ Ejemplo: "Actúa como un analista financiero" o "actúa como un consultor legal" para obtener respuestas más contextualizadas y relevantes.
+• Prompting Secuencial (Sequential Prompting): Se utiliza para obtener respuestas detalladas. Se le da al modelo un prompt inicial, y tras su respuesta, se le proporciona más información para refinar y profundizar en el resultado.
+• "One-Shot" y "Few-Shot" Prompting: Mejorar la calidad de la respuesta dándole al LLM uno o varios ejemplos de lo que se espera.
+    ◦ Ejemplo: En lugar de solo preguntar "¿Qué va mejor con los panqueques?", se puede refinar con un ejemplo: "El pastel de manzana es a la crema pastelera como el panqueque es a ____". Esto guía al modelo hacia la respuesta deseada (jarabe de arce).
+Mejores Prácticas para Escribir Prompts
+Valuri describe cuatro pilares fundamentales para un buen prompting:
+1. Ser Conversacional: Hablar con el LLM como si fuera un colega o un amigo.
+    ◦ Mal ejemplo: "Dame un plan de producto".
+    ◦ Buen ejemplo: "Escribe un plan de producto detallado para el lanzamiento de un nuevo producto llamado XYZ".
+2. Evitar la Ambigüedad y ser Claro: Usar instrucciones concisas y sin dobles sentidos.
+    ◦ Mal ejemplo: "Cinco preguntas interesantes para mi CPO".
+    ◦ Buen ejemplo: "Dame cinco preguntas bien pensadas para hacerle a mi CPO sobre la estrategia de producto y la hoja de ruta para el próximo año".
+3. Proporcionar Contexto: Cuanto más contexto se ofrezca, mejor será la respuesta.
+    ◦ Ejemplo: Al pedir una descripción de trabajo, especificar que es para contratar a un diseñador de UX.
+4. Ser Específico: Utilizar palabras clave relevantes para obtener resultados más precisos.
+    ◦ Ejemplo: "Crea un plan de proyecto para el lanzamiento de un nuevo producto, con un cronograma de X a Y".
+Ejemplos Prácticos para WhatsApp
+Durante su demostración, Valuri compara prompts "simples" con prompts "avanzados" o "refinados" para ilustrar la diferencia en la calidad de la respuesta.
+• Para Investigación de Usuarios (User Research):
+    ◦ Prompt Simple: "¿Cuál crees que es la parte más frustrante de usar WhatsApp para mensajería?".
+    ◦ Prompt Avanzado/Refinado: "Tu tarea es realizar una investigación de usuarios para entender mejor el comportamiento y las preferencias de los usuarios en WhatsApp. Utiliza una combinación de métodos cualitativos y cuantitativos para recopilar datos y validar suposiciones. Tu investigación debe incluir al menos 30 participantes...". Este enfoque da como resultado un plan de investigación completo en lugar de una respuesta simple.
+• Para Brainstorming de Funcionalidades:
+    ◦ Prompt Simple: "¿Cuáles son algunas características que harían a WhatsApp aún más útil?".
+    ◦ Prompt Avanzado/Refinado (con Juego de Roles): "Asume el rol de un Product Manager para WhatsApp y elabora una lista de características potenciales...". Este prompt genera ideas más innovadoras y contextualizadas, como mensajería segura basada en blockchain o traducción en tiempo real.
+Un Consejo Adicional
+Valuri menciona una técnica curiosa que parece mejorar las respuestas del LLM:
+• Añadir la frase "Respira hondo y resuelve este problema paso a paso" al prompt. Esto puede llevar a respuestas de mejor calidad, similar a cómo un ser humano responde mejor sin presión de tiempo.
+Finalmente, Valuri sugiere crear un "Mega Prompt" que consolide varios pasos (investigación de usuarios, puntuación de características, matriz de priorización) en una sola instrucción muy completa para obtener un resultado integral

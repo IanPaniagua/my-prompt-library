@@ -1,0 +1,120 @@
+---
+import Layout from "~/components/Layout.astro";
+import Header from "~/components/Header.astro";
+import Footer from "~/components/Footer.astro";
+import PromptCard from "~/components/PromptCard.astro";
+import { PROMPTS, TAGS } from "~/data/prompts";
+
+const params = Astro.url.searchParams;
+const q = (params.get('q') ?? '').toLowerCase();
+const tag = (params.get('tag') ?? '').toLowerCase();
+
+const filtered = PROMPTS.filter(p => {
+  const matchesQuery = q
+    ? [p.title, p.description ?? '', p.prompt, p.tags.join(' ')].join(' ').toLowerCase().includes(q)
+    : true;
+  const matchesTag = tag ? p.tags.map(t=>t.toLowerCase()).includes(tag) : true;
+  return matchesQuery && matchesTag;
+});
+---
+<Layout title="All Prompts — My Prompt Library" description="Browse and filter prompts for Product Managers.">
+  <Header />
+  <main class="container-tight pt-16 pb-24">
+    <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">Prompt Gallery</h1>
+    <p class="mt-3 text-ink/70">Browse all prompts. Filter by tag or search by keywords.</p>
+
+    <form class="mt-8 grid gap-3 sm:grid-cols-[1fr_auto]" onsubmit="return false;">
+      <input
+        type="text"
+        name="q"
+        value={q}
+        placeholder="Search prompts..."
+        class="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ink/10"
+        id="searchInput"
+      />
+      <div class="flex gap-2 items-center">
+        <select name="tag" class="rounded-xl border border-black/10 bg-white px-3 py-3 text-sm" id="tagSelect">
+          <option value="">All tags</option>
+          {TAGS.map((t) => (
+            <option value={t} selected={t.toLowerCase() === tag}>{t}</option>
+          ))}
+        </select>
+        <button type="button" id="clearBtn" class="rounded-xl bg-white border border-black/10 text-ink px-4 py-3 text-sm">Clear</button>
+      </div>
+    </form>
+
+    <div id="results" class="mt-8 grid gap-6 sm:grid-cols-2">
+      {PROMPTS.map((p) => (
+        <div
+          class="result"
+          data-title={p.title}
+          data-desc={p.description ?? ''}
+          data-tags={p.tags.join(' ')}
+          data-content={p.prompt}
+        >
+          <PromptCard title={p.title} description={p.description} prompt={p.prompt} tags={p.tags} />
+        </div>
+      ))}
+    </div>
+    <p id="emptyState" class="mt-4 hidden text-ink/60">No prompts found. Try a different search or tag.</p>
+
+    <script type="module">
+      const input = document.getElementById('searchInput');
+      const select = document.getElementById('tagSelect');
+      const results = document.getElementById('results');
+      const empty = document.getElementById('emptyState');
+      const clearBtn = document.getElementById('clearBtn');
+
+      function getFilter() {
+        const q = (input?.value || '').trim().toLowerCase();
+        const tag = (select?.value || '').trim().toLowerCase();
+        return { q, tag };
+      }
+
+      function applyFilter(pushState = false) {
+        if (!results) return;
+        const { q, tag } = getFilter();
+        let visible = 0;
+        results.querySelectorAll('.result').forEach((el) => {
+          const title = (el.dataset.title || '').toLowerCase();
+          const desc = (el.dataset.desc || '').toLowerCase();
+          const body = (el.dataset.content || '').toLowerCase();
+          const tags = (el.dataset.tags || '').toLowerCase();
+          const matchesQ = q ? (title + ' ' + desc + ' ' + body + ' ' + tags).includes(q) : true;
+          const matchesTag = tag ? tags.split(' ').includes(tag) : true;
+          const show = matchesQ && matchesTag;
+          el.classList.toggle('hidden', !show);
+          if (show) visible++;
+        });
+        if (empty) empty.classList.toggle('hidden', visible !== 0);
+
+        // keep URL in sync without reload
+        const url = new URL(window.location.href);
+        q ? url.searchParams.set('q', q) : url.searchParams.delete('q');
+        tag ? url.searchParams.set('tag', tag) : url.searchParams.delete('tag');
+        history.replaceState({}, '', url);
+      }
+
+      function hydrateFromURL() {
+        const url = new URL(window.location.href);
+        const q = url.searchParams.get('q') || '';
+        const tag = url.searchParams.get('tag') || '';
+        if (input) input.value = q;
+        if (select) select.value = tag;
+      }
+
+      hydrateFromURL();
+      applyFilter(false);
+
+      input?.addEventListener('input', () => applyFilter(true));
+      select?.addEventListener('change', () => applyFilter(true));
+      clearBtn?.addEventListener('click', () => {
+        if (input) input.value = '';
+        if (select) select.value = '';
+        applyFilter(true);
+      });
+    </script>
+
+  </main>
+  <Footer />
+</Layout>
