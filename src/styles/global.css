@@ -26,3 +26,12 @@ html, body {
 .link {
   @apply text-ink/80 hover:text-ink transition;
 }
+
+/* Hide scrollbars in supported browsers (used for mobile nav) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
